@@ -48,14 +48,18 @@ User → Frontend (React + Vite) → FastAPI Backend → Groq (LLaMA 3.1)
 
 No custom dataset training required.
 
-Backend Setup:
+## Backend Setup:
 cd backend
+
 pip install -r requirements.txt
 
-Run backend:
+## Run backend:
+
 python -m uvicorn main:app --reload
 
-3️⃣ Frontend Setup:
+## Frontend Setup:
 cd frontend
+
 npm install
+
 npm run dev
