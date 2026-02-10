@@ -4,13 +4,7 @@ from pathlib import Path
 from dotenv import load_dotenv
 from fastapi.middleware.cors import CORSMiddleware
 
-app.add_middleware(
-    CORSMiddleware,
-    allow_origins=["*"],  # for hackathon/demo
-    allow_credentials=True,
-    allow_methods=["*"],
-    allow_headers=["*"],
-)
+
 
 
 # Load .env BEFORE importing llm (llm reads GROQ_API_KEY at import time)
