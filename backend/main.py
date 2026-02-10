@@ -2,6 +2,16 @@ import re
 import json
 from pathlib import Path
 from dotenv import load_dotenv
+from fastapi.middleware.cors import CORSMiddleware
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["*"],  # for hackathon/demo
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
+
 
 # Load .env BEFORE importing llm (llm reads GROQ_API_KEY at import time)
 load_dotenv(Path(__file__).resolve().parent / ".env")
@@ -135,3 +145,4 @@ async def chat(contract: str = Form(...), question: str = Form(...)):
     except Exception as e:
         raise HTTPException(status_code=502, detail=f"Chat failed: {str(e)}")
     return {"answer": answer}
+

@@ -20,7 +20,8 @@ export interface AnalyzeResponse {
   };
 }
 
-const BASE_URL = "http://localhost:8000";
+// ✅ IMPORTANT: Use environment variable (works locally + hosted)
+const BASE_URL = import.meta.env.VITE_API_URL;
 
 async function handleResponse<T>(res: Response): Promise<T> {
   if (!res.ok) {
@@ -41,10 +42,12 @@ async function handleResponse<T>(res: Response): Promise<T> {
 export async function uploadPdf(file: File): Promise<string> {
   const form = new FormData();
   form.append("file", file);
+
   const res = await fetch(`${BASE_URL}/extract-pdf`, {
     method: "POST",
-    body: form
+    body: form,
   });
+
   const data = await handleResponse<{ text: string }>(res);
   return data.text;
 }
@@ -52,10 +55,12 @@ export async function uploadPdf(file: File): Promise<string> {
 export async function summarizeContract(contract: string): Promise<string> {
   const form = new FormData();
   form.append("contract", contract);
+
   const res = await fetch(`${BASE_URL}/summarize`, {
     method: "POST",
-    body: form
+    body: form,
   });
+
   const data = await handleResponse<{ summary: string }>(res);
   return data.summary;
 }
@@ -67,10 +72,12 @@ export async function analyzeContract(
   const form = new FormData();
   form.append("contract", contract);
   form.append("profile", profile);
+
   const res = await fetch(`${BASE_URL}/analyze`, {
     method: "POST",
-    body: form
+    body: form,
   });
+
   return handleResponse<AnalyzeResponse>(res);
 }
 
@@ -86,11 +93,12 @@ export async function chatAboutContract(
   const form = new FormData();
   form.append("contract", contract);
   form.append("question", question);
+
   const res = await fetch(`${BASE_URL}/chat`, {
     method: "POST",
-    body: form
+    body: form,
   });
+
   const data = await handleResponse<{ answer: string }>(res);
   return data.answer;
 }
-
